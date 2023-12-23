@@ -98,28 +98,28 @@ impl<T> Vector2d<T>
     pub fn dot(&mut self, w: Vector2d<T>) -> T {
         self.x * w.x + self.y * w.y
     }
-    pub fn add_item(mut v: Vector2d<T>, item: T) -> Vector2d<T> {
+    pub fn add_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x + item,
             y: v.y + item,
             major: v.major.clone()
         }
     }
-    pub fn sub_item(mut v: Vector2d<T>, item: T) -> Vector2d<T> {
+    pub fn sub_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x - item,
             y: v.y - item,
             major: v.major.clone()
         }
     }
-    pub fn mul_item(mut v: Vector2d<T>, item: T) -> Vector2d<T> {
+    pub fn mul_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x * item,
             y: v.y * item,
             major: v.major.clone()
         }
     }
-    pub fn div_item(mut v: Vector2d<T>, item: T) -> Vector2d<T> {
+    pub fn div_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x / item,
             y: v.y / item,

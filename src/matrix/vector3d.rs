@@ -101,8 +101,8 @@ impl<T> Vector3d<T>
             major: self.major.clone()
         }
     }
-    pub fn dot(&mut self, w: Vector3d<T>) -> T {
-        self.x * w.x + self.y * w.y + self.z *w.z
+    pub fn dot(&self, w: Vector3d<T>) -> T {
+        self.x * w.x + self.y * w.y + self.z * w.z
     }
     pub fn cross(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
@@ -112,7 +112,7 @@ impl<T> Vector3d<T>
             major: self.major.clone()
         }
     }
-    pub fn add_item(mut v: Vector3d<T>, item: T) -> Vector3d<T> {
+    pub fn add_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x + item,
             y: v.y + item,
@@ -120,7 +120,7 @@ impl<T> Vector3d<T>
             major: v.major.clone()
         }
     }
-    pub fn sub_item(mut v: Vector3d<T>, item: T) -> Vector3d<T> {
+    pub fn sub_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x - item,
             y: v.y - item,
@@ -128,7 +128,7 @@ impl<T> Vector3d<T>
             major: v.major.clone()
         }
     }
-    pub fn mul_item(mut v: Vector3d<T>, item: T) -> Vector3d<T> {
+    pub fn mul_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x * item,
             y: v.y * item,
@@ -136,7 +136,7 @@ impl<T> Vector3d<T>
             major: v.major.clone()
         }
     }
-    pub fn div_item(mut v: Vector3d<T>, item: T) -> Vector3d<T> {
+    pub fn div_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x / item,
             y: v.y / item,

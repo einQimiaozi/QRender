@@ -110,7 +110,7 @@ impl<T> Vector4d<T>
     pub fn dot(&mut self, w: Vector4d<T>) -> T {
         self.x * w.x + self.y * w.y + self.z *w.z + self.w * w.w
     }
-    pub fn add_item(mut v: Vector4d<T>, item: T) -> Vector4d<T> {
+    pub fn add_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x + item,
             y: v.x + item,
@@ -119,7 +119,7 @@ impl<T> Vector4d<T>
             major: v.major.clone()
         }
     }
-    pub fn sub_item(mut v: Vector4d<T>, item: T) -> Vector4d<T> {
+    pub fn sub_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x - item,
             y: v.x - item,
@@ -128,7 +128,7 @@ impl<T> Vector4d<T>
             major: v.major.clone()
         }
     }
-    pub fn mul_item(mut v: Vector4d<T>, item: T) -> Vector4d<T> {
+    pub fn mul_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x * item,
             y: v.x * item,
@@ -137,7 +137,7 @@ impl<T> Vector4d<T>
             major: v.major.clone()
         }
     }
-    pub fn div_item(mut v: Vector4d<T>, item: T) -> Vector4d<T> {
+    pub fn div_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x / item,
             y: v.x / item,
