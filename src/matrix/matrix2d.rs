@@ -50,10 +50,11 @@ impl<T> Matrix2d<T>
         self.items[0].y = self.items[1].x;
         self.items[1].x = tmp;
     }
-    pub fn product(&mut self, mat: Matrix2d<T>) -> Matrix2d<T> {
+    pub fn product(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat1 = self.clone();
-        let mut mat2 = mat.clone();
+        let mut mat2 = Matrix2d::new(Vector2d::new(mat.items[0].x.clone(), mat.items[1].x.clone()),
+                Vector2d::new(mat.items[0].y.clone(), mat.items[1].y.clone()));
 
         res.items[0].x = mat1.items[0].dot(mat2.items[0].clone());
         res.items[0].y = mat1.items[0].dot(mat2.items[1].clone());
@@ -63,13 +64,13 @@ impl<T> Matrix2d<T>
 
         res
     }
-    pub fn product_with_vector2d(&mut self, v: Vector2d<T>) -> Vector2d<T> {
+    pub fn product_with_vector2d(&self, v: Vector2d<T>) -> Vector2d<T> {
         let mut res = Vector2d::identity(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v.clone());
         res.y = self.items[1].dot(v.clone());
         res
     }
-    pub fn add(&mut self, mat: Matrix2d<T>) -> Matrix2d<T> {
+    pub fn add(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: vec![self.items[0].add(mat.items[0].clone()),
                         self.items[1].add(mat.items[1].clone())],
@@ -77,7 +78,7 @@ impl<T> Matrix2d<T>
             cols: 2,
         }
     }
-    pub fn hadamard(&mut self, mat: Matrix2d<T>) -> Matrix2d<T>{
+    pub fn hadamard(&self, mat: Matrix2d<T>) -> Matrix2d<T>{
         Matrix2d {
             items: vec![self.items[0].mul(mat.items[0].clone()),
                         self.items[1].mul(mat.items[1].clone())],
@@ -86,7 +87,7 @@ impl<T> Matrix2d<T>
         }
     }
 
-    pub fn sub(&mut self, mat: Matrix2d<T>) -> Matrix2d<T> {
+    pub fn sub(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: vec![self.items[0].sub(mat.items[0].clone()),
                         self.items[1].sub(mat.items[1].clone())],
@@ -95,7 +96,7 @@ impl<T> Matrix2d<T>
         }
     }
 
-    pub fn div(&mut self, mat: Matrix2d<T>) -> Matrix2d<T> {
+    pub fn div(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: vec![self.items[0].div(mat.items[0].clone()),
                         self.items[1].div(mat.items[1].clone())],
@@ -104,7 +105,7 @@ impl<T> Matrix2d<T>
         }
     }
 
-    pub fn add_item(&mut self, item: T) -> Matrix2d<T> {
+    pub fn add_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: vec![
                 Vector2d::new(self.items[0].x + item, self.items[0].y + item),
@@ -114,7 +115,7 @@ impl<T> Matrix2d<T>
             cols: 2,
         }
     }
-    pub fn sub_item(&mut self, item: T) -> Matrix2d<T> {
+    pub fn sub_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: vec![
                 Vector2d::new(self.items[0].x - item, self.items[0].y - item),
@@ -124,7 +125,7 @@ impl<T> Matrix2d<T>
             cols: 2,
         }
     }
-    pub fn mul_item(&mut self, item: T) -> Matrix2d<T> {
+    pub fn mul_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: vec![
                 Vector2d::new(self.items[0].x * item, self.items[0].y * item),
@@ -134,7 +135,7 @@ impl<T> Matrix2d<T>
             cols: 2,
         }
     }
-    pub fn div_item(&mut self, item: T) -> Matrix2d<T> {
+    pub fn div_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: vec![
                 Vector2d::new(self.items[0].x / item, self.items[0].y / item),

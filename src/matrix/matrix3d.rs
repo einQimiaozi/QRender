@@ -58,10 +58,12 @@ impl<T> Matrix3d<T>
         self.items[1].z = self.items[2].y;
         self.items[2].y = tmp;
     }
-    pub fn product(&mut self, mat: Matrix3d<T>) -> Matrix3d<T> {
+    pub fn product(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat1 = self.clone();
-        let mut mat2 = mat.clone();
+        let mut mat2 = Matrix3d::new(Vector3d::new(mat.items[0].x, mat.items[1].x, mat.items[2].x),
+                Vector3d::new(mat.items[0].y, mat.items[1].y, mat.items[2].y),
+                Vector3d::new(mat.items[0].z, mat.items[1].z, mat.items[2].z));
 
         res.items[0].x = mat1.items[0].dot(mat2.items[0].clone());
         res.items[0].y = mat1.items[0].dot(mat2.items[1].clone());
@@ -77,14 +79,14 @@ impl<T> Matrix3d<T>
 
         res
     }
-    pub fn product_with_vector3d(&mut self, v: Vector3d<T>) -> Vector3d<T> {
+    pub fn product_with_vector3d(&self, v: Vector3d<T>) -> Vector3d<T> {
         let mut res = Vector3d::identity(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v.clone());
         res.y = self.items[1].dot(v.clone());
         res.z = self.items[2].dot(v.clone());
         res
     }
-    pub fn add(&mut self, mat: Matrix3d<T>) -> Matrix3d<T> {
+    pub fn add(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: vec![self.items[0].add(mat.items[0].clone()),
                         self.items[1].add(mat.items[1].clone()),
@@ -93,7 +95,7 @@ impl<T> Matrix3d<T>
             cols: 3,
         }
     }
-    pub fn hadamard(&mut self, mat: Matrix3d<T>) -> Matrix3d<T>{
+    pub fn hadamard(&self, mat: Matrix3d<T>) -> Matrix3d<T>{
         Matrix3d {
             items: vec![self.items[0].mul(mat.items[0].clone()),
                         self.items[1].mul(mat.items[1].clone()),
@@ -103,7 +105,7 @@ impl<T> Matrix3d<T>
         }
     }
 
-    pub fn sub(&mut self, mat: Matrix3d<T>) -> Matrix3d<T> {
+    pub fn sub(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: vec![self.items[0].sub(mat.items[0].clone()),
                         self.items[1].sub(mat.items[1].clone()),
@@ -113,7 +115,7 @@ impl<T> Matrix3d<T>
         }
     }
 
-    pub fn div(&mut self, mat: Matrix3d<T>) -> Matrix3d<T> {
+    pub fn div(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: vec![self.items[0].div(mat.items[0].clone()),
                         self.items[1].div(mat.items[1].clone()),
@@ -123,7 +125,7 @@ impl<T> Matrix3d<T>
         }
     }
 
-    pub fn add_item(&mut self, item: T) -> Matrix3d<T> {
+    pub fn add_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: vec![
                 Vector3d::new(self.items[0].x + item, self.items[0].y + item, self.items[0].z + item),
@@ -134,7 +136,7 @@ impl<T> Matrix3d<T>
             cols: 3,
         }
     }
-    pub fn sub_item(&mut self, item: T) -> Matrix3d<T> {
+    pub fn sub_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: vec![
                 Vector3d::new(self.items[0].x - item, self.items[0].y - item, self.items[0].z - item),
@@ -145,7 +147,7 @@ impl<T> Matrix3d<T>
             cols: 3,
         }
     }
-    pub fn mul_item(&mut self, item: T) -> Matrix3d<T> {
+    pub fn mul_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: vec![
                 Vector3d::new(self.items[0].x * item, self.items[0].y * item, self.items[0].z * item),
@@ -156,7 +158,7 @@ impl<T> Matrix3d<T>
             cols: 3,
         }
     }
-    pub fn div_item(&mut self, item: T) -> Matrix3d<T> {
+    pub fn div_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: vec![
                 Vector3d::new(self.items[0].x / item, self.items[0].y / item, self.items[0].z / item),

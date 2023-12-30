@@ -71,7 +71,7 @@ impl<T> Vector4d<T>
         }
         res
     }
-    pub fn add(&mut self, w: Vector4d<T>) -> Vector4d<T> {
+    pub fn add(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x + w.x,
             y: self.y + w.y,
@@ -80,7 +80,7 @@ impl<T> Vector4d<T>
             major: self.major.clone()
         }
     }
-    pub fn mul(&mut self, w: Vector4d<T>) -> Vector4d<T> {
+    pub fn mul(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x * w.x,
             y: self.y * w.y,
@@ -89,7 +89,7 @@ impl<T> Vector4d<T>
             major: self.major.clone()
         }
     }
-    pub fn sub(&mut self, w: Vector4d<T>) -> Vector4d<T> {
+    pub fn sub(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x - w.x,
             y: self.y - w.y,
@@ -98,7 +98,7 @@ impl<T> Vector4d<T>
             major: self.major.clone()
         }
     }
-    pub fn div(&mut self, w: Vector4d<T>) -> Vector4d<T> {
+    pub fn div(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x / w.x,
             y: self.y / w.y,
@@ -107,7 +107,7 @@ impl<T> Vector4d<T>
             major: self.major.clone()
         }
     }
-    pub fn dot(&mut self, w: Vector4d<T>) -> T {
+    pub fn dot(&self, w: Vector4d<T>) -> T {
         self.x * w.x + self.y * w.y + self.z *w.z + self.w * w.w
     }
     pub fn add_item(v: Vector4d<T>, item: T) -> Vector4d<T> {

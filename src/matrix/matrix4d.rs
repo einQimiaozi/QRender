@@ -70,10 +70,15 @@ impl<T> Matrix4d<T>
         self.items[2].w = self.items[3].z;
         self.items[3].z = tmp;
     }
-    pub fn product(&mut self, mat: Matrix4d<T>) -> Matrix4d<T> {
+    pub fn product(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat1 = self.clone();
-        let mut mat2 = mat.clone();
+        let mut mat2 = Matrix4d::new(
+            Vector4d::new(mat.items[0].x.clone(), mat.items[1].x.clone(), mat.items[2].x.clone(), mat.items[3].x.clone()),
+            Vector4d::new(mat.items[0].y.clone(), mat.items[1].y.clone(), mat.items[2].y.clone(), mat.items[3].y.clone()),
+            Vector4d::new(mat.items[0].z.clone(), mat.items[1].z.clone(), mat.items[2].z.clone(), mat.items[3].z.clone()),
+            Vector4d::new(mat.items[0].w.clone(), mat.items[1].w.clone(), mat.items[2].w.clone(), mat.items[3].w.clone())
+        );
 
         res.items[0].x = mat1.items[0].dot(mat2.items[0].clone());
         res.items[0].y = mat1.items[0].dot(mat2.items[1].clone());
@@ -90,9 +95,14 @@ impl<T> Matrix4d<T>
         res.items[2].z = mat1.items[2].dot(mat2.items[2].clone());
         res.items[2].w = mat1.items[2].dot(mat2.items[3].clone());
 
+        res.items[3].x = mat1.items[3].dot(mat2.items[0].clone());
+        res.items[3].y = mat1.items[3].dot(mat2.items[1].clone());
+        res.items[3].z = mat1.items[3].dot(mat2.items[2].clone());
+        res.items[3].w = mat1.items[3].dot(mat2.items[3].clone());
+
         res
     }
-    pub fn product_with_vector4d(&mut self, v: Vector4d<T>) -> Vector4d<T> {
+    pub fn product_with_vector4d(&self, v: Vector4d<T>) -> Vector4d<T> {
         let mut res = Vector4d::identity(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v.clone());
         res.y = self.items[1].dot(v.clone());
@@ -100,7 +110,7 @@ impl<T> Matrix4d<T>
         res.w = self.items[3].dot(v.clone());
         res
     }
-    pub fn add(&mut self, mat: Matrix4d<T>) -> Matrix4d<T> {
+    pub fn add(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: vec![self.items[0].add(mat.items[0].clone()),
                         self.items[1].add(mat.items[1].clone()),
@@ -110,7 +120,7 @@ impl<T> Matrix4d<T>
             cols: 4,
         }
     }
-    pub fn hadamard(&mut self, mat: Matrix4d<T>) -> Matrix4d<T>{
+    pub fn hadamard(&self, mat: Matrix4d<T>) -> Matrix4d<T>{
         Matrix4d {
             items: vec![self.items[0].mul(mat.items[0].clone()),
                         self.items[1].mul(mat.items[1].clone()),
@@ -121,7 +131,7 @@ impl<T> Matrix4d<T>
         }
     }
 
-    pub fn sub(&mut self, mat: Matrix4d<T>) -> Matrix4d<T> {
+    pub fn sub(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: vec![self.items[0].sub(mat.items[0].clone()),
                         self.items[1].sub(mat.items[1].clone()),
@@ -132,18 +142,18 @@ impl<T> Matrix4d<T>
         }
     }
 
-    pub fn div(&mut self, mat: Matrix4d<T>) -> Matrix4d<T> {
+    pub fn div(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: vec![self.items[0].div(mat.items[0].clone()),
                         self.items[1].div(mat.items[1].clone()),
                         self.items[2].div(mat.items[2].clone()),
-                        self.items[3].add(mat.items[3].clone())],
+                        self.items[3].div(mat.items[3].clone())],
             rows: 4,
             cols: 4,
         }
     }
 
-    pub fn add_item(&mut self, item: T) -> Matrix4d<T> {
+    pub fn add_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: vec![
                 Vector4d::new(self.items[0].x + item, self.items[0].y + item, self.items[0].z + item, self.items[0].w + item),
@@ -155,7 +165,7 @@ impl<T> Matrix4d<T>
             cols: 4,
         }
     }
-    pub fn sub_item(&mut self, item: T) -> Matrix4d<T> {
+    pub fn sub_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: vec![
                 Vector4d::new(self.items[0].x - item, self.items[0].y - item, self.items[0].z - item, self.items[0].w - item),
@@ -167,7 +177,7 @@ impl<T> Matrix4d<T>
             cols: 4,
         }
     }
-    pub fn mul_item(&mut self, item: T) -> Matrix4d<T> {
+    pub fn mul_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: vec![
                 Vector4d::new(self.items[0].x * item, self.items[0].y * item, self.items[0].z * item, self.items[0].w * item),
@@ -179,7 +189,7 @@ impl<T> Matrix4d<T>
             cols: 4,
         }
     }
-    pub fn div_item(&mut self, item: T) -> Matrix4d<T> {
+    pub fn div_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: vec![
                 Vector4d::new(self.items[0].x / item, self.items[0].y / item, self.items[0].z / item, self.items[0].w / item),

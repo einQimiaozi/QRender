@@ -69,7 +69,7 @@ impl<T> Vector3d<T>
         }
         res
     }
-    pub fn add(&mut self, w: Vector3d<T>) -> Vector3d<T> {
+    pub fn add(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x + w.x,
             y: self.y + w.y,
@@ -77,7 +77,7 @@ impl<T> Vector3d<T>
             major: self.major.clone()
         }
     }
-    pub fn mul(&mut self, w: Vector3d<T>) -> Vector3d<T> {
+    pub fn mul(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x * w.x,
             y: self.y * w.y,
@@ -85,7 +85,7 @@ impl<T> Vector3d<T>
             major: self.major.clone()
         }
     }
-    pub fn div(&mut self, w: Vector3d<T>) -> Vector3d<T> {
+    pub fn div(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x / w.x,
             y: self.y / w.y,
@@ -93,7 +93,7 @@ impl<T> Vector3d<T>
             major: self.major.clone()
         }
     }
-    pub fn sub(&mut self, w: Vector3d<T>) -> Vector3d<T> {
+    pub fn sub(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x - w.x,
             y: self.y - w.y,
@@ -106,9 +106,9 @@ impl<T> Vector3d<T>
     }
     pub fn cross(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
-            x: self.y * w.z - w.y - self.z,
+            x: self.y * w.z - w.y * self.z,
             y: self.z * w.x - w.z * self.x,
-            z: self.x * w.y - w.x * self.z,
+            z: self.x * w.y - w.x * self.y,
             major: self.major.clone()
         }
     }

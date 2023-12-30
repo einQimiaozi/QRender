@@ -67,35 +67,35 @@ impl<T> Vector2d<T>
         }
         res
     }
-    pub fn add(&mut self, w: Vector2d<T>) -> Vector2d<T> {
+    pub fn add(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x + w.x,
             y: self.y + w.y,
             major: self.major.clone()
         }
     }
-    pub fn mul(&mut self, w: Vector2d<T>) -> Vector2d<T> {
+    pub fn mul(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x * w.x,
             y: self.y * w.y,
             major: self.major.clone()
         }
     }
-    pub fn div(&mut self, w: Vector2d<T>) -> Vector2d<T> {
+    pub fn div(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x / w.x,
             y: self.y / w.y,
             major: self.major.clone()
         }
     }
-    pub fn sub(&mut self, w: Vector2d<T>) -> Vector2d<T> {
+    pub fn sub(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x - w.x,
             y: self.y - w.y,
             major: self.major.clone()
         }
     }
-    pub fn dot(&mut self, w: Vector2d<T>) -> T {
+    pub fn dot(&self, w: Vector2d<T>) -> T {
         self.x * w.x + self.y * w.y
     }
     pub fn add_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
