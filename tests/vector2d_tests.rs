@@ -1,7 +1,13 @@
+#![feature(test)]
 #[cfg(test)]
 mod tests {
     use QRender::matrix2d::Matrix2d;
     use QRender::matrix::vector2d::Vector2d;
+
+    extern crate test;
+    use test::Bencher;
+    use QRender::matrix4d::Matrix4d;
+    use QRender::vector4d::Vector4d;
 
     #[test]
     fn vector2d_equal() {
@@ -99,5 +105,12 @@ mod tests {
         let v = v1.product_with_matrix2d(m);
         assert_eq!(v.x, 18);
         assert_eq!(v.y, 26);
+    }
+
+    #[bench]
+    fn bench_vector2d_product_with_matrix2d(b: &mut Bencher) {
+        let v1 = Vector2d::new(3, 5);
+        let m = Matrix2d::new(Vector2d::new(1, 2), Vector2d::new(3, 4));
+        b.iter(|| v1.product_with_matrix2d(m));
     }
 }

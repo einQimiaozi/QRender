@@ -1,5 +1,9 @@
+#![feature(test)]
 #[cfg(test)]
 mod tests {
+    extern crate test;
+    use test::Bencher;
+
     use QRender::matrix::matrix4d::Matrix4d;
     use QRender::matrix::vector4d::Vector4d;
 
@@ -68,6 +72,23 @@ mod tests {
         assert_eq!(m.items[3].y, 14);
         assert_eq!(m.items[3].z, 41);
         assert_eq!(m.items[3].w, 68);
+    }
+
+    #[bench]
+    fn bench_matrix4d_product(b: &mut Bencher) {
+        let m1 = Matrix4d::new(
+            Vector4d::new(2, 1, 0, 3),
+            Vector4d::new(3, 4, 5, 2),
+            Vector4d::new(6, 7, 8, 9),
+            Vector4d::new(4, 3, 2, 1)
+        );
+        let m2 = Matrix4d::new(
+            Vector4d::new(3, 0, 4, 9),
+            Vector4d::new(7, 1, 3, 8),
+            Vector4d::new(9, 2, 5, 4),
+            Vector4d::new(4, 7, 6, 0)
+        );
+        b.iter(|| m1.product(m2));
     }
 
     #[test]
