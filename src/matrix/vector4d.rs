@@ -1,4 +1,5 @@
 use std::{fmt, ops};
+use crate::matrix::matrix4d::Matrix4d;
 use crate::matrix::utils::Major;
 use crate::matrix::vector_errors::{VectorError, VectorErrorType};
 
@@ -129,7 +130,6 @@ impl<T> Vector4d<T>
     }
 
     /** Dot two 4D vectors, Example
-
     ```rust
     let v1 = Vector4d::new(1, 2, 3, 4);
     let v2 = Vector4d::new(5, 6, 7, 8);
@@ -211,6 +211,34 @@ impl<T> Vector4d<T>
         self.y = self.y / n;
         self.z = self.z / n;
         self.w = self.w / n;
+    }
+
+    /** Multiply a 4-dimensional vector left by a 4x4-dimensional matrix to return a 4-dimensional vector, Example
+    ```rust
+    let v1 = Vector4d::new(3, 5, 6, 1);
+    let m = Matrix4d::new(
+        Vector4d::new(1, 2, 3, 4),
+        Vector4d::new(5, 6, 7, 8),
+        Vector4d::new(9, 0, 1, 2),
+        Vector4d::new(3, 4, 5, 6)
+    );
+    let v = v1.product_with_matrix4d(m);
+    ```
+
+    output v:
+    ```
+    [85, 40, 55, 70]
+    ```
+     */
+    pub fn product_with_matrix4d(&self, m: Matrix4d<T>) -> Vector4d<T> {
+        let mut mat2 = m.clone();
+        mat2.transpose();
+        Vector4d::new(
+            self.dot(mat2.items[0]),
+            self.dot(mat2.items[1]),
+            self.dot(mat2.items[2]),
+            self.dot(mat2.items[3])
+        )
     }
 }
 

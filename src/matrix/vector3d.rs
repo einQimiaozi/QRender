@@ -1,4 +1,5 @@
 use std::{fmt, ops};
+use crate::matrix::matrix3d::Matrix3d;
 use crate::matrix::utils::Major;
 use crate::matrix::vector_errors::{VectorError, VectorErrorType};
 
@@ -221,6 +222,28 @@ impl<T> Vector3d<T>
         self.x = self.x / n;
         self.y = self.y / n;
         self.z = self.z / n;
+    }
+
+    /** Multiply a 3-dimensional vector left by a 3x3-dimensional matrix to return a 3-dimensional vector, Example
+    ```rust
+    let v1 = Vector3d::new(3, 5, 6);
+    let m = Matrix3d::new(Vector3d::new(1, 2, 3), Vector3d::new(4, 5, 6), Vector3d::new(7, 8, 9));
+    let v = v1.product_with_matrix2d(m);
+    ```
+
+    output v:
+    ```
+    [65, 79, 93]
+    ```
+     */
+    pub fn product_with_matrix3d(&self, m: Matrix3d<T>) -> Vector3d<T> {
+        let mut mat2 = m.clone();
+        mat2.transpose();
+        Vector3d::new(
+            self.dot(mat2.items[0]),
+            self.dot(mat2.items[1]),
+            self.dot(mat2.items[2])
+        )
     }
 }
 

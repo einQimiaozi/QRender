@@ -4,7 +4,7 @@ use crate::matrix::vector3d::Vector3d;
 /** 3D matrix
   Supports regular matrix calculations
   Supports comparing matrix for equality
-  Each item type in the matrix must support the Copy trait and alternate addition, subtraction, multiplication, division and Product operations.
+  Each item type in the matrix must support the Copy trait and alternate addition, subtraction, multiplication, division, Product and Cross operations.
  */
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Matrix3d<T>
@@ -54,6 +54,9 @@ impl<T> Matrix3d<T>
 
     /** matrix transpose, Example
     ```rust
+    use crate::matrix::vector3d::Vector3d;
+    use crate::matrix::matrix3d::Matrix3d;
+
     let mut m = Matrix3d::new(Vector3d::new(2, 1, 0), Vector3d::new(3, 4, 5), Vector3d::new(6, 7, 8));
     m.transpose();
     ```
@@ -81,6 +84,9 @@ impl<T> Matrix3d<T>
 
     /** Dot product of two 3x3 dimensional matrices, Example
     ```rust
+    use crate::matrix::vector3d::Vector3d;
+    use crate::matrix::matrix3d::Matrix3d;
+
     let m1 = Matrix3d::new(Vector3d::new(2, 1, 0), Vector3d::new(3, 4, 5), Vector3d::new(6, 7, 8));
     let m2 = Matrix3d::new(Vector3d::new(3, 0, 4), Vector3d::new(7, 1, 3), Vector3d::new(9, 2, 5));
     let m = m1 * m2;
@@ -115,6 +121,9 @@ impl<T> Matrix3d<T>
 
     /** Dot product of a 3x3 dimensional matrix and a 3 dimensional vector, Example
     ```rust
+    use crate::matrix::vector3d::Vector3d;
+    use crate::matrix::matrix3d::Matrix3d;
+
     let m = Matrix3d::new(Vector3d::new(1, 2, 5), Vector3d::new(3, 4, 7), Vector3d::new(0, 6, 3));
     let v1 = Vector3d::new(2, 3, 5);
     let v = m.product_with_vector3d(v1);
@@ -231,6 +240,9 @@ impl<T> Matrix3d<T>
 
     /** Cross-multiply two 3x3-dimensional matrices and return a 3x3-dimensional matrix, Example
     ```rust
+    use crate::matrix::vector3d::Vector3d;
+    use crate::matrix::matrix3d::Matrix3d;
+
     let m1 = Matrix3d::new(
         Vector3d::new(1, 2, 3),
         Vector3d::new(4, 5, 6),
@@ -290,7 +302,7 @@ impl<T> ops::Add for Matrix3d<T>
 {
     type Output = Matrix3d<T>;
 
-    /// Add two 2x2 matrix
+    /// Add two 3x3 matrix
     fn add(self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [self.items[0].add(mat.items[0]),

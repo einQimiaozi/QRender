@@ -1,4 +1,5 @@
 use std::{fmt, ops};
+use crate::matrix::matrix2d::Matrix2d;
 use crate::matrix::utils::Major;
 use crate::matrix::vector_errors::{VectorError, VectorErrorType};
 
@@ -189,6 +190,27 @@ impl<T> Vector2d<T>
         let n = self.norm();
         self.x = self.x / n;
         self.y = self.y / n;
+    }
+
+    /** Multiply a 2-dimensional vector left by a 2x2-dimensional matrix to return a 2-dimensional vector, Example
+    ```rust
+    let v1 = Vector2d::new(3, 5);
+    let m = Matrix2d::new(Vector2d::new(1, 2), Vector2d::new(3, 4));
+    let v = v1.product_with_matrix2d(m);
+    ```
+
+    output v:
+    ```
+    [18, 26]
+    ```
+    */
+    pub fn product_with_matrix2d(&self, m: Matrix2d<T>) -> Vector2d<T> {
+        let mut mat2 = m.clone();
+        mat2.transpose();
+        Vector2d::new(
+            self.dot(mat2.items[0]),
+            self.dot(mat2.items[1])
+        )
     }
 }
 

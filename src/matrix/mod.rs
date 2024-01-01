@@ -1,4 +1,3 @@
-// todo: 支持vector在左侧点乘matrix计算
 pub mod vector2d;
 pub mod vector3d;
 pub mod vector4d;
