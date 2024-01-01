@@ -1,5 +1,6 @@
 #[cfg(test)]
 mod tests {
+    use QRender::matrix2d::Matrix2d;
     use QRender::matrix::vector2d::Vector2d;
 
     #[test]
@@ -89,5 +90,14 @@ mod tests {
         v.normalized();
         assert_eq!(v.x, 0.08823529411764706);
         assert_eq!(v.y, 0.14705882352941177);
+    }
+
+    #[test]
+    fn vector2d_product_with_matrix2d() {
+        let v1 = Vector2d::new(3, 5);
+        let m = Matrix2d::new(Vector2d::new(1, 2), Vector2d::new(3, 4));
+        let v = v1.product_with_matrix2d(m);
+        assert_eq!(v.x, 18);
+        assert_eq!(v.y, 26);
     }
 }

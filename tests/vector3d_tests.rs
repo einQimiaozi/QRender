@@ -1,7 +1,6 @@
-use QRender::vector2d::Vector2d;
-
 #[cfg(test)]
 mod tests {
+    use QRender::matrix3d::Matrix3d;
     use QRender::matrix::vector3d::Vector3d;
 
     #[test]
@@ -101,5 +100,15 @@ mod tests {
         assert_eq!(v.x, 0.07894736842105263);
         assert_eq!(v.y, 0.13157894736842105);
         assert_eq!(v.z, 0.05263157894736842);
+    }
+
+    #[test]
+    fn vector3d_product_with_matrix3d() {
+        let v1 = Vector3d::new(3, 5, 6);
+        let m = Matrix3d::new(Vector3d::new(1, 2, 3), Vector3d::new(4, 5, 6), Vector3d::new(7, 8, 9));
+        let v = v1.product_with_matrix3d(m);
+        assert_eq!(v.x, 65);
+        assert_eq!(v.y, 79);
+        assert_eq!(v.z, 93);
     }
 }

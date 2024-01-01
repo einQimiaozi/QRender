@@ -7,7 +7,7 @@ mod tests {
     fn matrix4d_transpose() {
         let mut m = Matrix4d::new(
             Vector4d::new(2, 1, 0, 3),
-            Vector4d::new(3,4, 5, 2),
+            Vector4d::new(3, 4, 5, 2),
             Vector4d::new(6, 7, 8, 9),
             Vector4d::new(4, 3, 2, 1)
         );
@@ -37,15 +37,15 @@ mod tests {
     fn matrix4d_product() {
         let m1 = Matrix4d::new(
             Vector4d::new(2, 1, 0, 3),
-            Vector4d::new(3,4, 5, 2),
+            Vector4d::new(3, 4, 5, 2),
             Vector4d::new(6, 7, 8, 9),
             Vector4d::new(4, 3, 2, 1)
         );
         let m2 = Matrix4d::new(
             Vector4d::new(3, 0, 4, 9),
-            Vector4d::new(7,1, 3, 8),
+            Vector4d::new(7, 1, 3, 8),
             Vector4d::new(9, 2, 5, 4),
-            Vector4d::new(4,7, 6, 0)
+            Vector4d::new(4, 7, 6, 0)
         );
         let m = m1 * m2;
         assert_eq!(m.items[0].x, 25);
