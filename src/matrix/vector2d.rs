@@ -36,6 +36,7 @@ impl<T> Vector2d<T>
     ops::Div<Output=T> +
     ops::Sub<Output=T>
 {
+    #[inline]
     pub fn new(x: T, y: T) -> Vector2d<T> {
         Vector2d{x, y, major: Major::Row}
     }
@@ -56,6 +57,7 @@ impl<T> Vector2d<T>
     }
 
     /// Create a 2-dimensional vector with an initial value of item_type
+    #[inline]
     pub fn identity(type_item: T) -> Vector2d<T> {
         Vector2d {
             x: type_item,
@@ -65,6 +67,7 @@ impl<T> Vector2d<T>
     }
 
     /// Transpose the 2-dimensional vector. Note that here we simply use markers to distinguish
+    #[inline]
     pub fn transpose(&mut self) {
         match self.major {
             Major::Col => self.major = Major::Row,
@@ -72,6 +75,7 @@ impl<T> Vector2d<T>
         }
     }
 
+    #[inline]
     pub fn from_transpose(v: Vector2d<T>) -> Vector2d<T> {
         let mut res = Vector2d::identity(v.x);
         match v.major {
@@ -82,6 +86,7 @@ impl<T> Vector2d<T>
     }
 
     /// Add two 2D vectors
+    #[inline]
     pub fn add(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x + w.x,
@@ -91,6 +96,7 @@ impl<T> Vector2d<T>
     }
 
     /// Multiply two 2-dimensional vectors. Note that it is not a dot.
+    #[inline]
     pub fn mul(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x * w.x,
@@ -100,6 +106,7 @@ impl<T> Vector2d<T>
     }
 
     /// Divide two 2D vectors
+    #[inline]
     pub fn div(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x / w.x,
@@ -109,6 +116,7 @@ impl<T> Vector2d<T>
     }
 
     /// Subtract two 2D vectors
+    #[inline]
     pub fn sub(&self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x - w.x,
@@ -130,16 +138,19 @@ impl<T> Vector2d<T>
     11
     ```
     */
+    #[inline]
     pub fn dot(&self, w: Vector2d<T>) -> T {
         self.x * w.x + self.y * w.y
     }
 
     /// Find the norm length of a 2-dimensional vector
+    #[inline]
     pub fn norm(&self) -> T {
         self.x * self.x + self.y * self.y
     }
 
     /// Add a variable of the same type to each component of the 2-dimensional vector
+    #[inline]
     pub fn add_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x + item,
@@ -149,6 +160,7 @@ impl<T> Vector2d<T>
     }
 
     /// Divide a variable of the same type to each component of the 2-dimensional vector
+    #[inline]
     pub fn sub_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x - item,
@@ -158,6 +170,7 @@ impl<T> Vector2d<T>
     }
 
     /// Multiply a variable of the same type to each component of the 2-dimensional vector
+    #[inline]
     pub fn mul_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x * item,
@@ -167,6 +180,7 @@ impl<T> Vector2d<T>
     }
 
     /// Subtract a variable of the same type to each component of the 2-dimensional vector
+    #[inline]
     pub fn div_item(v: Vector2d<T>, item: T) -> Vector2d<T> {
         Vector2d {
             x: v.x / item,
@@ -186,6 +200,7 @@ impl<T> Vector2d<T>
     [0.08823529411764706, 0.14705882352941177]
     ```
     */
+    #[inline]
     pub fn normalized(&mut self) {
         let n = self.norm();
         self.x = self.x / n;
@@ -204,6 +219,7 @@ impl<T> Vector2d<T>
     [18, 26]
     ```
     */
+    #[inline]
     pub fn product_with_matrix2d(&self, m: Matrix2d<T>) -> Vector2d<T> {
         let mut mat2 = m.clone();
         mat2.transpose();
@@ -251,6 +267,7 @@ impl<T> ops::Add for Vector2d<T>
     type Output = Vector2d<T>;
 
     /// Add two 2D vectors
+    #[inline]
     fn add(self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x + w.x,
@@ -274,6 +291,7 @@ impl<T> ops::Sub for Vector2d<T>
     type Output = Vector2d<T>;
 
     /// Subtract two 2D vectors
+    #[inline]
     fn sub(self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x - w.x,
@@ -297,6 +315,7 @@ impl<T> ops::Mul for Vector2d<T>
     type Output = T;
 
     /// Dot two 2D vectors
+    #[inline]
     fn mul(self, w: Vector2d<T>) -> T {
         self.x * w.x + self.y * w.y
     }
@@ -316,6 +335,7 @@ impl<T> ops::Div for Vector2d<T>
     type Output = Vector2d<T>;
 
     /// Divide two 2D vectors
+    #[inline]
     fn div(self, w: Vector2d<T>) -> Vector2d<T> {
         Vector2d {
             x: self.x / w.x,

@@ -38,11 +38,13 @@ impl<T> Vector4d<T>
     ops::Div<Output=T> +
     ops::Sub<Output=T>
 {
+    #[inline]
     pub fn new(x: T, y: T, z: T, w: T) -> Vector4d<T> {
         Vector4d{x, y, z, w, major: Major::Row}
     }
 
     /// Create a vector from a Vec
+    #[inline]
     pub fn from_vector(v: Vec<T>) -> Result<Vector4d<T>, VectorError> {
         if v.len() != 4 {
             return Err(
@@ -58,6 +60,7 @@ impl<T> Vector4d<T>
     }
 
     /// Create a 4-dimensional vector with an initial value of item_type
+    #[inline]
     pub fn identity(type_item: T) -> Vector4d<T> {
         Vector4d {
             x: type_item,
@@ -69,6 +72,7 @@ impl<T> Vector4d<T>
     }
 
     /// Transpose the 4-dimensional vector. Note that here we simply use markers to distinguish
+    #[inline]
     pub fn transpose(&mut self) {
         match self.major {
             Major::Col => self.major = Major::Row,
@@ -76,6 +80,7 @@ impl<T> Vector4d<T>
         }
     }
 
+    #[inline]
     pub fn from_transpose(v: Vector4d<T>) -> Vector4d<T> {
         let mut res = Vector4d::identity(v.x);
         match v.major {
@@ -86,6 +91,7 @@ impl<T> Vector4d<T>
     }
 
     /// Add two 4D vectors
+    #[inline]
     pub fn add(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x + w.x,
@@ -97,6 +103,7 @@ impl<T> Vector4d<T>
     }
 
     /// Multiply two 4-dimensional vectors. Note that it is not a dot.
+    #[inline]
     pub fn mul(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x * w.x,
@@ -108,6 +115,7 @@ impl<T> Vector4d<T>
     }
 
     /// Subtract two 4D vectors
+    #[inline]
     pub fn sub(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x - w.x,
@@ -119,6 +127,7 @@ impl<T> Vector4d<T>
     }
 
     /// Divide two 4D vectors
+    #[inline]
     pub fn div(&self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x / w.x,
@@ -141,11 +150,13 @@ impl<T> Vector4d<T>
     32
     ```
      */
+    #[inline]
     pub fn dot(&self, w: Vector4d<T>) -> T {
         self.x * w.x + self.y * w.y + self.z *w.z + self.w * w.w
     }
 
     /// Add a variable of the same type to each component of the 4-dimensional vector
+    #[inline]
     pub fn add_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x + item,
@@ -157,6 +168,7 @@ impl<T> Vector4d<T>
     }
 
     /// Subtract a variable of the same type to each component of the 4-dimensional vector
+    #[inline]
     pub fn sub_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x - item,
@@ -168,6 +180,7 @@ impl<T> Vector4d<T>
     }
 
     /// Multiply a variable of the same type to each component of the 4-dimensional vector
+    #[inline]
     pub fn mul_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x * item,
@@ -179,6 +192,7 @@ impl<T> Vector4d<T>
     }
 
     /// Divide a variable of the same type to each component of the 4-dimensional vector
+    #[inline]
     pub fn div_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x / item,
@@ -190,6 +204,7 @@ impl<T> Vector4d<T>
     }
 
     /// Find the norm length of a 4-dimensional vector
+    #[inline]
     pub fn norm(&self) -> T {
         self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w
     }
@@ -205,6 +220,7 @@ impl<T> Vector4d<T>
     [0.04054054054054054, 0.06756756756756757, 0.02702702702702703, 0.08108108108108109]
     ```
      */
+    #[inline]
     pub fn normalized(&mut self) {
         let n = self.norm();
         self.x = self.x / n;
@@ -230,6 +246,7 @@ impl<T> Vector4d<T>
     [85, 40, 55, 70]
     ```
      */
+    #[inline]
     pub fn product_with_matrix4d(&self, m: Matrix4d<T>) -> Vector4d<T> {
         let mut mat2 = m.clone();
         mat2.transpose();
@@ -279,6 +296,7 @@ impl<T> ops::Add for Vector4d<T>
     type Output = Vector4d<T>;
 
     /// Add two 2D vectors
+    #[inline]
     fn add(self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x + w.x,
@@ -304,6 +322,7 @@ impl<T> ops::Sub for Vector4d<T>
     type Output = Vector4d<T>;
 
     /// Subtract two 2D vectors
+    #[inline]
     fn sub(self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x - w.x,
@@ -329,6 +348,7 @@ impl<T> ops::Mul for Vector4d<T>
     type Output = T;
 
     /// Dot two 2D vectors
+    #[inline]
     fn mul(self, w: Vector4d<T>) -> T {
         self.x * w.x + self.y * w.y + self.z *w.z + self.w * w.w
     }
@@ -348,6 +368,7 @@ impl<T> ops::Div for Vector4d<T>
     type Output = Vector4d<T>;
 
     /// Divide two 2D vectors
+    #[inline]
     fn div(self, w: Vector4d<T>) -> Vector4d<T> {
         Vector4d {
             x: self.x / w.x,

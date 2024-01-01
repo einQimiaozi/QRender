@@ -37,11 +37,13 @@ impl<T> Vector3d<T>
     ops::Div<Output=T> +
     ops::Sub<Output=T>
 {
+    #[inline]
     pub fn new(x: T, y: T, z: T) -> Vector3d<T> {
         Vector3d{x, y, z, major: Major::Row}
     }
 
     /// Create a vector from a Vec
+    #[inline]
     pub fn from_vector(v: Vec<T>) -> Result<Vector3d<T>, VectorError> {
         if v.len() != 3 {
             return Err(
@@ -57,6 +59,7 @@ impl<T> Vector3d<T>
     }
 
     /// Create a 3-dimensional vector with an initial value of item_type
+    #[inline]
     pub fn identity(type_item: T) -> Vector3d<T> {
         Vector3d {
             x: type_item,
@@ -67,6 +70,7 @@ impl<T> Vector3d<T>
     }
 
     /// Transpose the 3-dimensional vector. Note that here we simply use markers to distinguish
+    #[inline]
     pub fn transpose(&mut self) {
         match self.major {
             Major::Col => self.major = Major::Row,
@@ -74,6 +78,7 @@ impl<T> Vector3d<T>
         }
     }
 
+    #[inline]
     pub fn from_transpose(v: Vector3d<T>) -> Vector3d<T> {
         let mut res = Vector3d::identity(v.x);
         match v.major {
@@ -84,6 +89,7 @@ impl<T> Vector3d<T>
     }
 
     /// Add two 3D vectors
+    #[inline]
     pub fn add(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x + w.x,
@@ -94,6 +100,7 @@ impl<T> Vector3d<T>
     }
 
     /// Multiply two 3-dimensional vectors. Note that it is not a dot.
+    #[inline]
     pub fn mul(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x * w.x,
@@ -104,6 +111,7 @@ impl<T> Vector3d<T>
     }
 
     /// Divide two 3D vectors
+    #[inline]
     pub fn div(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x / w.x,
@@ -114,6 +122,7 @@ impl<T> Vector3d<T>
     }
 
     /// Subtract two 3D vectors
+    #[inline]
     pub fn sub(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x - w.x,
@@ -136,6 +145,7 @@ impl<T> Vector3d<T>
     32
     ```
      */
+    #[inline]
     pub fn dot(&self, w: Vector3d<T>) -> T {
         self.x * w.x + self.y * w.y + self.z * w.z
     }
@@ -152,6 +162,7 @@ impl<T> Vector3d<T>
     [-3, 6, -3]
     ```
     */
+    #[inline]
     pub fn cross(&self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.y * w.z - w.y * self.z,
@@ -162,6 +173,7 @@ impl<T> Vector3d<T>
     }
 
     /// Add a variable of the same type to each component of the 3-dimensional vector
+    #[inline]
     pub fn add_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x + item,
@@ -172,6 +184,7 @@ impl<T> Vector3d<T>
     }
 
     /// Subtract a variable of the same type to each component of the 3-dimensional vector
+    #[inline]
     pub fn sub_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x - item,
@@ -182,6 +195,7 @@ impl<T> Vector3d<T>
     }
 
     /// Multiply a variable of the same type to each component of the 3-dimensional vector
+    #[inline]
     pub fn mul_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x * item,
@@ -192,6 +206,7 @@ impl<T> Vector3d<T>
     }
 
     /// Divide a variable of the same type to each component of the 3-dimensional vector
+    #[inline]
     pub fn div_item(v: Vector3d<T>, item: T) -> Vector3d<T> {
         Vector3d {
             x: v.x / item,
@@ -202,6 +217,7 @@ impl<T> Vector3d<T>
     }
 
     /// Find the norm length of a 3-dimensional vector
+    #[inline]
     pub fn norm(&self) -> T {
         self.x * self.x + self.y * self.y + self.z * self.z
     }
@@ -217,6 +233,7 @@ impl<T> Vector3d<T>
     [0.07894736842105263, 0.13157894736842105, 0.05263157894736842]
     ```
      */
+    #[inline]
     pub fn normalized(&mut self) {
         let n = self.norm();
         self.x = self.x / n;
@@ -236,6 +253,7 @@ impl<T> Vector3d<T>
     [65, 79, 93]
     ```
      */
+    #[inline]
     pub fn product_with_matrix3d(&self, m: Matrix3d<T>) -> Vector3d<T> {
         let mut mat2 = m.clone();
         mat2.transpose();
@@ -284,6 +302,7 @@ impl<T> ops::Add for Vector3d<T>
     type Output = Vector3d<T>;
 
     /// Add two 2D vectors
+    #[inline]
     fn add(self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x + w.x,
@@ -308,6 +327,7 @@ impl<T> ops::Sub for Vector3d<T>
     type Output = Vector3d<T>;
 
     /// Subtract two 2D vectors
+    #[inline]
     fn sub(self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x - w.x,
@@ -332,6 +352,7 @@ impl<T> ops::Mul for Vector3d<T>
     type Output = T;
 
     /// Dot two 2D vectors
+    #[inline]
     fn mul(self, w: Vector3d<T>) -> T {
         self.x * w.x + self.y * w.y + self.z * w.z
     }
@@ -351,6 +372,7 @@ impl<T> ops::Div for Vector3d<T>
     type Output = Vector3d<T>;
 
     /// Divide two 2D vectors
+    #[inline]
     fn div(self, w: Vector3d<T>) -> Vector3d<T> {
         Vector3d {
             x: self.x / w.x,

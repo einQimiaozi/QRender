@@ -34,6 +34,7 @@ impl<T> Matrix2d<T>
     ops::Div<Output=T> +
     ops::Sub<Output=T>
 {
+    #[inline]
     pub fn new(v1: Vector2d<T>, v2: Vector2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: [v1, v2],
@@ -43,6 +44,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Create a 2x2-dimensional matrix with an initial value of item_type
+    #[inline]
     pub fn identity(item_type: T) -> Matrix2d<T> {
         let items = [Vector2d::new(item_type, item_type); 2];
         Matrix2d {
@@ -64,6 +66,7 @@ impl<T> Matrix2d<T>
     [1, 4]
     ```
      */
+    #[inline]
     pub fn transpose(&mut self) {
         let tmp = self.items[0].y;
         self.items[0].y = self.items[1].x;
@@ -83,6 +86,7 @@ impl<T> Matrix2d<T>
     [23, 25]
     ```
     */
+    #[inline]
     pub fn product(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat2 = self.clone();
@@ -109,6 +113,7 @@ impl<T> Matrix2d<T>
     [8, 18]
     ```
     */
+    #[inline]
     pub fn product_with_vector2d(&self, v: Vector2d<T>) -> Vector2d<T> {
         let mut res = Vector2d::identity(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v);
@@ -117,6 +122,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Add two 2x2 matrix
+    #[inline]
     pub fn add(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: [self.items[0] + (mat.items[0]),
@@ -127,6 +133,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Multiply two 2x2-dimensional matrix. Note that it is not a dot.
+    #[inline]
     pub fn hadamard(&self, mat: Matrix2d<T>) -> Matrix2d<T>{
         Matrix2d {
             items: [self.items[0].mul(mat.items[0]),
@@ -137,6 +144,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Subtract two 2x2-dimensional matrix.
+    #[inline]
     pub fn sub(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: [self.items[0].sub(mat.items[0]),
@@ -147,6 +155,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Divide two 2x2-dimensional matrix.
+    #[inline]
     pub fn div(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: [self.items[0].div(mat.items[0]),
@@ -157,6 +166,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Add a variable of the same type to each component of the 2x2-dimensional matrix
+    #[inline]
     pub fn add_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: [
@@ -169,6 +179,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Subtract a variable of the same type to each component of the 2x2-dimensional matrix
+    #[inline]
     pub fn sub_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: [
@@ -181,6 +192,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Multiply a variable of the same type to each component of the 2x2-dimensional matrix
+    #[inline]
     pub fn mul_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: [
@@ -193,6 +205,7 @@ impl<T> Matrix2d<T>
     }
 
     /// Divide a variable of the same type to each component of the 2x2-dimensional matrix
+    #[inline]
     pub fn div_item(&self, item: T) -> Matrix2d<T> {
         Matrix2d {
             items: [
@@ -239,6 +252,7 @@ impl<T> ops::Add for Matrix2d<T>
     type Output = Matrix2d<T>;
 
     /// Add two 2x2 matrix
+    #[inline]
     fn add(self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: [self.items[0] + (mat.items[0]),
@@ -263,6 +277,7 @@ impl<T> ops::Sub for Matrix2d<T>
     type Output = Matrix2d<T>;
 
     /// Subtract two 2x2-dimensional matrix.
+    #[inline]
     fn sub(self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: [self.items[0].sub(mat.items[0]),
@@ -287,6 +302,7 @@ impl<T> ops::Mul for Matrix2d<T>
     type Output = Matrix2d<T>;
 
     /// Dot two 2x2-dimensional matrix.
+    #[inline]
     fn mul(self, mat: Matrix2d<T>) -> Matrix2d<T>  {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix2d::new(
@@ -318,6 +334,7 @@ impl<T> ops::Div for Matrix2d<T>
     type Output = Matrix2d<T>;
 
     /// Divide two 2x2-dimensional matrix.
+    #[inline]
     fn div(self, mat: Matrix2d<T>) -> Matrix2d<T> {
         Matrix2d {
             items: [self.items[0].div(mat.items[0]),

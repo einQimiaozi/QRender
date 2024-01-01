@@ -34,6 +34,7 @@ impl<T> Matrix3d<T>
     ops::Div<Output=T> +
     ops::Sub<Output=T>
 {
+    #[inline]
     pub fn new(v1: Vector3d<T>, v2: Vector3d<T>, v3: Vector3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [v1, v2, v3],
@@ -43,6 +44,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Create a 3x3-dimensional matrix with an initial value of item_type
+    #[inline]
     pub fn identity(item_type: T) -> Matrix3d<T> {
         let items = [Vector3d::new(item_type, item_type, item_type); 3];
         Matrix3d {
@@ -68,6 +70,7 @@ impl<T> Matrix3d<T>
     [0, 5, 8]
     ```
      */
+    #[inline]
     pub fn transpose(&mut self) {
         let tmp = self.items[0].y;
         self.items[0].y = self.items[1].x;
@@ -99,6 +102,7 @@ impl<T> Matrix3d<T>
     [139, 23, 85]
     ```
      */
+    #[inline]
     pub fn product(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat2 = self.clone();
@@ -134,6 +138,7 @@ impl<T> Matrix3d<T>
     [33, 53, 33]
     ```
      */
+    #[inline]
     pub fn product_with_vector3d(&self, v: Vector3d<T>) -> Vector3d<T> {
         let mut res = Vector3d::identity(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v);
@@ -143,6 +148,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Add two 3x3 matrix
+    #[inline]
     pub fn add(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [self.items[0].add(mat.items[0]),
@@ -154,6 +160,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Multiply two 3x3-dimensional matrix. Note that it is not a dot.
+    #[inline]
     pub fn hadamard(&self, mat: Matrix3d<T>) -> Matrix3d<T>{
         Matrix3d {
             items: [self.items[0].mul(mat.items[0]),
@@ -165,6 +172,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Subtract two 3x3-dimensional matrix.
+    #[inline]
     pub fn sub(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [self.items[0].sub(mat.items[0]),
@@ -176,6 +184,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Divide two 3x3-dimensional matrix.
+    #[inline]
     pub fn div(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [self.items[0].div(mat.items[0]),
@@ -187,6 +196,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Add a variable of the same type to each component of the 3x3-dimensional matrix
+    #[inline]
     pub fn add_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: [
@@ -200,6 +210,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Subtract a variable of the same type to each component of the 3x3-dimensional matrix
+    #[inline]
     pub fn sub_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: [
@@ -213,6 +224,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Multiply a variable of the same type to each component of the 3x3-dimensional matrix
+    #[inline]
     pub fn mul_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: [
@@ -226,6 +238,7 @@ impl<T> Matrix3d<T>
     }
 
     /// Divide a variable of the same type to each component of the 3x3-dimensional matrix
+    #[inline]
     pub fn div_item(&self, item: T) -> Matrix3d<T> {
         Matrix3d {
             items: [
@@ -259,6 +272,7 @@ impl<T> Matrix3d<T>
     [-1,  2,   5]
     ```
     */
+    #[inline]
     pub fn cross(&self, v: Vector3d<T>) -> Matrix3d<T> {
         Matrix3d::new(
             self.items[0].cross(v),
@@ -303,6 +317,7 @@ impl<T> ops::Add for Matrix3d<T>
     type Output = Matrix3d<T>;
 
     /// Add two 3x3 matrix
+    #[inline]
     fn add(self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [self.items[0].add(mat.items[0]),
@@ -328,6 +343,7 @@ impl<T> ops::Sub for Matrix3d<T>
     type Output = Matrix3d<T>;
 
     /// Subtract two 3x3-dimensional matrix.
+    #[inline]
     fn sub(self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [self.items[0].sub(mat.items[0]),
@@ -353,6 +369,7 @@ impl<T> ops::Mul for Matrix3d<T>
     type Output = Matrix3d<T>;
 
     /// Dot two 3x3-dimensional matrix.
+    #[inline]
     fn mul(self, mat: Matrix3d<T>) -> Matrix3d<T>  {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix3d::new(
@@ -391,6 +408,7 @@ impl<T> ops::Div for Matrix3d<T>
     type Output = Matrix3d<T>;
 
     /// Divide two 3x3-dimensional matrix.
+    #[inline]
     fn div(self, mat: Matrix3d<T>) -> Matrix3d<T> {
         Matrix3d {
             items: [self.items[0].div(mat.items[0]),

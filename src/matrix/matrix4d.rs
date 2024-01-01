@@ -34,6 +34,7 @@ impl<T> Matrix4d<T>
     ops::Div<Output=T> +
     ops::Sub<Output=T>
 {
+    #[inline]
     pub fn new(v1: Vector4d<T>, v2: Vector4d<T>, v3: Vector4d<T>, v4: Vector4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: [v1, v2, v3, v4],
@@ -43,6 +44,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Create a 4x4-dimensional matrix with an initial value of item_type
+    #[inline]
     pub fn identity(item_type: T) -> Matrix4d<T> {
         let items = [Vector4d::new(item_type, item_type, item_type, item_type); 4];
         Matrix4d {
@@ -74,6 +76,7 @@ impl<T> Matrix4d<T>
     [3, 2, 9, 1]
     ```
      */
+    #[inline]
     pub fn transpose(&mut self) {
         let tmp = self.items[0].y;
         self.items[0].y = self.items[1].x;
@@ -128,6 +131,7 @@ impl<T> Matrix4d<T>
     [55,  14, 41,   68]
     ```
      */
+    #[inline]
     pub fn product(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix4d::new(
@@ -180,6 +184,7 @@ impl<T> Matrix4d<T>
     [42, 61, 39, 28]
     ```
      */
+    #[inline]
     pub fn product_with_vector4d(&self, v: Vector4d<T>) -> Vector4d<T> {
         let mut res = Vector4d::identity(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v);
@@ -190,6 +195,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Add two 4x4 matrix
+    #[inline]
     pub fn add(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: [self.items[0].add(mat.items[0]),
@@ -202,6 +208,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Multiply two 4x4-dimensional matrix. Note that it is not a dot.
+    #[inline]
     pub fn hadamard(&self, mat: Matrix4d<T>) -> Matrix4d<T>{
         Matrix4d {
             items: [self.items[0].mul(mat.items[0]),
@@ -214,6 +221,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Subtract two 4x4-dimensional matrix.
+    #[inline]
     pub fn sub(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: [self.items[0].sub(mat.items[0]),
@@ -226,6 +234,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Divide two 4x4-dimensional matrix.
+    #[inline]
     pub fn div(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: [self.items[0].div(mat.items[0]),
@@ -238,6 +247,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Add a variable of the same type to each component of the 4x4-dimensional matrix
+    #[inline]
     pub fn add_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: [
@@ -252,6 +262,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Subtract a variable of the same type to each component of the 4x4-dimensional matrix
+    #[inline]
     pub fn sub_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: [
@@ -266,6 +277,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Multiply a variable of the same type to each component of the 4x4-dimensional matrix
+    #[inline]
     pub fn mul_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: [
@@ -280,6 +292,7 @@ impl<T> Matrix4d<T>
     }
 
     /// Divide a variable of the same type to each component of the 4x4-dimensional matrix
+    #[inline]
     pub fn div_item(&self, item: T) -> Matrix4d<T> {
         Matrix4d {
             items: [
@@ -330,6 +343,7 @@ impl<T> ops::Add for Matrix4d<T>
     type Output = Matrix4d<T>;
 
     /// Add two 4x4 matrix
+    #[inline]
     fn add(self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: [
@@ -358,6 +372,7 @@ impl<T> ops::Sub for Matrix4d<T>
     type Output = Matrix4d<T>;
 
     /// Subtract two 4x4-dimensional matrix.
+    #[inline]
     fn sub(self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: [
@@ -386,6 +401,7 @@ impl<T> ops::Mul for Matrix4d<T>
     type Output = Matrix4d<T>;
 
     /// Dot two 4x4-dimensional matrix.
+    #[inline]
     fn mul(self, mat: Matrix4d<T>) -> Matrix4d<T>  {
         let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix4d::new(
@@ -433,6 +449,7 @@ impl<T> ops::Div for Matrix4d<T>
     type Output = Matrix4d<T>;
 
     /// Divide two 4x4-dimensional matrix.
+    #[inline]
     fn div(self, mat: Matrix4d<T>) -> Matrix4d<T> {
         Matrix4d {
             items: [
