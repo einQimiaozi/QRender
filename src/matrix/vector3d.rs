@@ -1,6 +1,8 @@
 use std::{fmt, ops};
+use crate::matrix::vector4d::Vector4d;
 use crate::matrix::matrix3d::Matrix3d;
 use crate::matrix::utils::Major;
+use crate::matrix::vector2d::Vector2d;
 use crate::matrix::vector_errors::{VectorError, VectorErrorType};
 
 /** 3D vector
@@ -60,13 +62,19 @@ impl<T> Vector3d<T>
 
     /// Create a 3-dimensional vector with an initial value of item_type
     #[inline]
-    pub fn identity(type_item: T) -> Vector3d<T> {
+    pub fn fill(type_item: T) -> Vector3d<T> {
         Vector3d {
             x: type_item,
             y: type_item,
             z: type_item,
             major: Major::Row
         }
+    }
+
+    /// Create a 3-dimensional zero vector
+    #[inline]
+    pub fn zero(type_item: T) -> Vector3d<T> {
+        Self::fill(type_item - type_item)
     }
 
     /// Transpose the 3-dimensional vector. Note that here we simply use markers to distinguish
@@ -80,7 +88,7 @@ impl<T> Vector3d<T>
 
     #[inline]
     pub fn from_transpose(v: Vector3d<T>) -> Vector3d<T> {
-        let mut res = Vector3d::identity(v.x);
+        let mut res = Vector3d::fill(v.x);
         match v.major {
             Major::Col => res.major = Major::Row,
             Major::Row => res.major = Major::Col
@@ -262,6 +270,16 @@ impl<T> Vector3d<T>
             self.dot(mat2.items[1]),
             self.dot(mat2.items[2])
         )
+    }
+
+    #[inline]
+    pub fn to_vector4d(&self, add_item: T) -> Vector4d<T> {
+        Vector4d::new(self.x, self.y, self.z, add_item)
+    }
+
+    #[inline]
+    pub fn head2(&self) -> Vector2d<T> {
+        Vector2d::new(self.x, self.y)
     }
 }
 

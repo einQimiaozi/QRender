@@ -1,7 +1,11 @@
-mod matrix;
+use crate::rasterizer::rasterizer::Rasterizer;
+use crate::rasterizer::example1;
 
-use matrix::{vector2d::Vector2d, vector3d::Vector3d, vector4d::Vector4d, matrix2d::Matrix2d, matrix3d::Matrix3d, matrix4d::Matrix4d};
+mod matrix;
+mod rasterizer;
+mod geometry;
 
 fn main() {
-
+    let args = vec!["", "", "200.0", "output.png"];
+    example1::draw_green_triangle(args);
 }

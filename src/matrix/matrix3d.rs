@@ -45,13 +45,34 @@ impl<T> Matrix3d<T>
 
     /// Create a 3x3-dimensional matrix with an initial value of item_type
     #[inline]
-    pub fn identity(item_type: T) -> Matrix3d<T> {
+    pub fn fill(item_type: T) -> Matrix3d<T> {
         let items = [Vector3d::new(item_type, item_type, item_type); 3];
         Matrix3d {
             items,
             rows: 3,
             cols: 3,
         }
+    }
+
+    /// Create a 3x3 dimensional identity matrix
+    #[inline]
+    pub fn identity(item_type: T) -> Matrix3d<T> {
+        let zero = item_type - item_type;
+        let items = [
+            Vector3d::new(item_type, zero, zero),
+            Vector3d::new(zero, item_type, zero),
+            Vector3d::new(zero, zero, item_type)
+        ];
+        Matrix3d {
+            items,
+            rows: 3,
+            cols: 3,
+        }
+    }
+
+    /// Create a 3x3 dimensional zero matrix
+    pub fn zero(item_type: T) -> Matrix3d<T> {
+        Self::fill(item_type - item_type)
     }
 
     /** matrix transpose, Example
@@ -104,7 +125,7 @@ impl<T> Matrix3d<T>
      */
     #[inline]
     pub fn product(&self, mat: Matrix3d<T>) -> Matrix3d<T> {
-        let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
+        let mut res = Self::fill(mat.items[0].x - mat.items[0].x);
         let mut mat2 = self.clone();
         mat2.transpose();
 
@@ -140,7 +161,7 @@ impl<T> Matrix3d<T>
      */
     #[inline]
     pub fn product_with_vector3d(&self, v: Vector3d<T>) -> Vector3d<T> {
-        let mut res = Vector3d::identity(self.items[0].x - self.items[0].x);
+        let mut res = Vector3d::fill(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v);
         res.y = self.items[1].dot(v);
         res.z = self.items[2].dot(v);
@@ -371,7 +392,7 @@ impl<T> ops::Mul for Matrix3d<T>
     /// Dot two 3x3-dimensional matrix.
     #[inline]
     fn mul(self, mat: Matrix3d<T>) -> Matrix3d<T>  {
-        let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
+        let mut res = Self::fill(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix3d::new(
             Vector3d::new(mat.items[0].x, mat.items[1].x, mat.items[2].x),
             Vector3d::new(mat.items[0].y, mat.items[1].y, mat.items[2].y),

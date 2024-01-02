@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use QRender::matrix4d::Matrix4d;
+    use QRender::matrix::matrix4d::Matrix4d;
     use QRender::matrix::vector4d::Vector4d;
 
     #[test]
@@ -13,7 +13,7 @@ mod tests {
 
     #[test]
     fn vector4d_add() {
-        let v1 = Vector4d::identity(1);
+        let v1 = Vector4d::fill(1);
         let v = v1 + v1;
         assert_eq!(v.x, 2);
         assert_eq!(v.y, 2);
@@ -23,7 +23,7 @@ mod tests {
 
     #[test]
     fn vector4d_sub() {
-        let v1 = Vector4d::identity(1);
+        let v1 = Vector4d::fill(1);
         let v = v1 - v1;
         assert_eq!(v.x, 0);
         assert_eq!(v.y, 0);
@@ -33,7 +33,7 @@ mod tests {
 
     #[test]
     fn vector4d_mul() {
-        let v1 = Vector4d::identity(2);
+        let v1 = Vector4d::fill(2);
         let v = v1.mul(v1);
         assert_eq!(v.x, 4);
         assert_eq!(v.y, 4);
@@ -43,7 +43,7 @@ mod tests {
 
     #[test]
     fn vector4d_div() {
-        let v1 = Vector4d::identity(2);
+        let v1 = Vector4d::fill(2);
         let v = v1 / v1;
         assert_eq!(v.x, 1);
         assert_eq!(v.y, 1);
@@ -53,7 +53,7 @@ mod tests {
 
     #[test]
     fn vector4d_add_item() {
-        let v1 = Vector4d::identity(4);
+        let v1 = Vector4d::fill(4);
         let v = Vector4d::add_item(v1, 2);
         assert_eq!(v.x, 6);
         assert_eq!(v.y, 6);
@@ -63,7 +63,7 @@ mod tests {
 
     #[test]
     fn vector4d_mul_item() {
-        let v1 = Vector4d::identity(4);
+        let v1 = Vector4d::fill(4);
         let v = Vector4d::mul_item(v1, 2);
         assert_eq!(v.x, 8);
         assert_eq!(v.y, 8);
@@ -73,7 +73,7 @@ mod tests {
 
     #[test]
     fn vector4d_sub_item() {
-        let v1 = Vector4d::identity(4);
+        let v1 = Vector4d::fill(4);
         let v = Vector4d::sub_item(v1, 2);
         assert_eq!(v.x, 2);
         assert_eq!(v.y, 2);
@@ -83,7 +83,7 @@ mod tests {
 
     #[test]
     fn vector4d_div_item() {
-        let v1 = Vector4d::identity(4);
+        let v1 = Vector4d::fill(4);
         let v = Vector4d::div_item(v1, 2);
         assert_eq!(v.x, 2);
         assert_eq!(v.y, 2);

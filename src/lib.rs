@@ -1,2 +1,3 @@
 pub mod matrix;
-pub use matrix::*;
+pub mod rasterizer;
+pub mod geometry;

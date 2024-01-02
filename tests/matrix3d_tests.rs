@@ -50,8 +50,8 @@ mod tests {
 
     #[test]
     fn matrix3d_add() {
-        let m1 = Matrix3d::identity(1);
-        let m = m1 + Matrix3d::identity(1);
+        let m1 = Matrix3d::fill(1);
+        let m = m1 + Matrix3d::fill(1);
         assert_eq!(m.items[0].x, 2);
         assert_eq!(m.items[0].y, 2);
         assert_eq!(m.items[0].z, 2);
@@ -67,8 +67,8 @@ mod tests {
 
     #[test]
     fn matrix3d_sub() {
-        let m1 = Matrix3d::identity(1);
-        let m = m1 - Matrix3d::identity(1);
+        let m1 = Matrix3d::fill(1);
+        let m = m1 - Matrix3d::fill(1);
         assert_eq!(m.items[0].x, 0);
         assert_eq!(m.items[0].y, 0);
         assert_eq!(m.items[0].z, 0);
@@ -84,8 +84,8 @@ mod tests {
 
     #[test]
     fn matrix3d_div() {
-        let m1 = Matrix3d::identity(10);
-        let m = m1 / Matrix3d::identity(2);
+        let m1 = Matrix3d::fill(10);
+        let m = m1 / Matrix3d::fill(2);
         assert_eq!(m.items[0].x, 5);
         assert_eq!(m.items[0].y, 5);
         assert_eq!(m.items[0].z, 5);
@@ -101,8 +101,8 @@ mod tests {
 
     #[test]
     fn matrix3d_hadamard() {
-        let m1 = Matrix3d::identity(3);
-        let m = m1.hadamard(Matrix3d::identity(4));
+        let m1 = Matrix3d::fill(3);
+        let m = m1.hadamard(Matrix3d::fill(4));
         assert_eq!(m.items[0].x, 12);
         assert_eq!(m.items[0].y, 12);
         assert_eq!(m.items[0].z, 12);
@@ -118,7 +118,7 @@ mod tests {
 
     #[test]
     fn matrix3d_add_item() {
-        let m1 = Matrix3d::identity(1);
+        let m1 = Matrix3d::fill(1);
         let m = m1.add_item(2);
         assert_eq!(m.items[0].x, 3);
         assert_eq!(m.items[0].y, 3);
@@ -135,7 +135,7 @@ mod tests {
 
     #[test]
     fn matrix3d_div_item() {
-        let m1 = Matrix3d::identity(10);
+        let m1 = Matrix3d::fill(10);
         let m = m1.div_item(2);
         assert_eq!(m.items[0].x, 5);
         assert_eq!(m.items[0].y, 5);
@@ -152,7 +152,7 @@ mod tests {
 
     #[test]
     fn matrix3d_sub_item() {
-        let m1 = Matrix3d::identity(1);
+        let m1 = Matrix3d::fill(1);
         let m = m1.sub_item(2);
         assert_eq!(m.items[0].x, -1);
         assert_eq!(m.items[0].y, -1);
@@ -169,7 +169,7 @@ mod tests {
 
     #[test]
     fn matrix3d_mul_item() {
-        let m1 = Matrix3d::identity(3);
+        let m1 = Matrix3d::fill(3);
         let m = m1.mul_item(2);
         assert_eq!(m.items[0].x, 6);
         assert_eq!(m.items[0].y, 6);

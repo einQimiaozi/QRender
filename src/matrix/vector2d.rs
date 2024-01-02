@@ -1,6 +1,8 @@
 use std::{fmt, ops};
 use crate::matrix::matrix2d::Matrix2d;
 use crate::matrix::utils::Major;
+use crate::matrix::vector3d::Vector3d;
+use crate::matrix::vector4d::Vector4d;
 use crate::matrix::vector_errors::{VectorError, VectorErrorType};
 
 /** 2D vector
@@ -58,12 +60,18 @@ impl<T> Vector2d<T>
 
     /// Create a 2-dimensional vector with an initial value of item_type
     #[inline]
-    pub fn identity(type_item: T) -> Vector2d<T> {
+    pub fn fill(type_item: T) -> Vector2d<T> {
         Vector2d {
             x: type_item,
             y: type_item,
             major: Major::Row
         }
+    }
+
+    /// Create a 2-dimensional zero vector
+    #[inline]
+    pub fn zero(type_item: T) -> Vector2d<T> {
+        Self::fill(type_item - type_item)
     }
 
     /// Transpose the 2-dimensional vector. Note that here we simply use markers to distinguish
@@ -77,7 +85,7 @@ impl<T> Vector2d<T>
 
     #[inline]
     pub fn from_transpose(v: Vector2d<T>) -> Vector2d<T> {
-        let mut res = Vector2d::identity(v.x);
+        let mut res = Vector2d::fill(v.x);
         match v.major {
             Major::Col => res.major = Major::Row,
             Major::Row => res.major = Major::Col
@@ -227,6 +235,16 @@ impl<T> Vector2d<T>
             self.dot(mat2.items[0]),
             self.dot(mat2.items[1])
         )
+    }
+
+    #[inline]
+    pub fn to_vector3d(&self, add_item: T) -> Vector3d<T> {
+        Vector3d::new(self.x, self.y, add_item)
+    }
+
+    #[inline]
+    pub fn to_vector4d(&self, add_item1: T, add_item2: T) -> Vector4d<T> {
+        Vector4d::new(self.x, self.y, add_item1, add_item2)
     }
 }
 

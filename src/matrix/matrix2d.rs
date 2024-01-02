@@ -45,13 +45,30 @@ impl<T> Matrix2d<T>
 
     /// Create a 2x2-dimensional matrix with an initial value of item_type
     #[inline]
-    pub fn identity(item_type: T) -> Matrix2d<T> {
+    pub fn fill(item_type: T) -> Matrix2d<T> {
         let items = [Vector2d::new(item_type, item_type); 2];
         Matrix2d {
             items,
             rows: 2,
             cols: 2,
         }
+    }
+
+    /// Create a 2x2 dimensional identity matrix
+    #[inline]
+    pub fn identity(item_type: T) -> Matrix2d<T> {
+        let zero = item_type - item_type;
+        let items = [Vector2d::new(item_type, zero), Vector2d::new(zero, item_type)];
+        Matrix2d {
+            items,
+            rows: 2,
+            cols: 2,
+        }
+    }
+
+    /// Create a 2x2 dimensional zero matrix
+    pub fn zero(item_type: T) -> Matrix2d<T> {
+        Self::fill(item_type - item_type)
     }
 
     /** matrix transpose, Example
@@ -88,7 +105,7 @@ impl<T> Matrix2d<T>
     */
     #[inline]
     pub fn product(&self, mat: Matrix2d<T>) -> Matrix2d<T> {
-        let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
+        let mut res = Self::fill(mat.items[0].x - mat.items[0].x);
         let mut mat2 = self.clone();
         mat2.transpose();
 
@@ -115,7 +132,7 @@ impl<T> Matrix2d<T>
     */
     #[inline]
     pub fn product_with_vector2d(&self, v: Vector2d<T>) -> Vector2d<T> {
-        let mut res = Vector2d::identity(self.items[0].x - self.items[0].x);
+        let mut res = Vector2d::fill(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v);
         res.y = self.items[1].dot(v);
         res
@@ -304,7 +321,7 @@ impl<T> ops::Mul for Matrix2d<T>
     /// Dot two 2x2-dimensional matrix.
     #[inline]
     fn mul(self, mat: Matrix2d<T>) -> Matrix2d<T>  {
-        let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
+        let mut res = Self::fill(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix2d::new(
             Vector2d::new(mat.items[0].x, mat.items[1].x),
             Vector2d::new(mat.items[0].y, mat.items[1].y)

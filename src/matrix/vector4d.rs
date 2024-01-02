@@ -1,6 +1,8 @@
 use std::{fmt, ops};
 use crate::matrix::matrix4d::Matrix4d;
 use crate::matrix::utils::Major;
+use crate::matrix::vector2d::Vector2d;
+use crate::matrix::vector3d::Vector3d;
 use crate::matrix::vector_errors::{VectorError, VectorErrorType};
 
 /** 4D vector
@@ -61,7 +63,7 @@ impl<T> Vector4d<T>
 
     /// Create a 4-dimensional vector with an initial value of item_type
     #[inline]
-    pub fn identity(type_item: T) -> Vector4d<T> {
+    pub fn fill(type_item: T) -> Vector4d<T> {
         Vector4d {
             x: type_item,
             y: type_item,
@@ -69,6 +71,12 @@ impl<T> Vector4d<T>
             w: type_item,
             major: Major::Row
         }
+    }
+
+    /// Create a 4-dimensional zero vector
+    #[inline]
+    pub fn zero(type_item: T) -> Vector4d<T> {
+        Self::fill(type_item - type_item)
     }
 
     /// Transpose the 4-dimensional vector. Note that here we simply use markers to distinguish
@@ -82,7 +90,7 @@ impl<T> Vector4d<T>
 
     #[inline]
     pub fn from_transpose(v: Vector4d<T>) -> Vector4d<T> {
-        let mut res = Vector4d::identity(v.x);
+        let mut res = Vector4d::fill(v.x);
         match v.major {
             Major::Col => res.major = Major::Row,
             Major::Row => res.major = Major::Col
@@ -160,9 +168,9 @@ impl<T> Vector4d<T>
     pub fn add_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x + item,
-            y: v.x + item,
-            z: v.x + item,
-            w: v.x + item,
+            y: v.y + item,
+            z: v.z + item,
+            w: v.w + item,
             major: v.major.clone()
         }
     }
@@ -172,9 +180,9 @@ impl<T> Vector4d<T>
     pub fn sub_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x - item,
-            y: v.x - item,
-            z: v.x - item,
-            w: v.x - item,
+            y: v.y - item,
+            z: v.z - item,
+            w: v.w - item,
             major: v.major.clone()
         }
     }
@@ -184,9 +192,9 @@ impl<T> Vector4d<T>
     pub fn mul_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x * item,
-            y: v.x * item,
-            z: v.x * item,
-            w: v.x * item,
+            y: v.y * item,
+            z: v.z * item,
+            w: v.w * item,
             major: v.major.clone()
         }
     }
@@ -196,9 +204,9 @@ impl<T> Vector4d<T>
     pub fn div_item(v: Vector4d<T>, item: T) -> Vector4d<T> {
         Vector4d {
             x: v.x / item,
-            y: v.x / item,
-            z: v.x / item,
-            w: v.x / item,
+            y: v.y / item,
+            z: v.z / item,
+            w: v.w / item,
             major: v.major.clone()
         }
     }
@@ -256,6 +264,16 @@ impl<T> Vector4d<T>
             self.dot(mat2.items[2]),
             self.dot(mat2.items[3])
         )
+    }
+
+    #[inline]
+    pub fn head2(&self) -> Vector2d<T> {
+        Vector2d::new(self.x, self.y)
+    }
+
+    #[inline]
+    pub fn head3(&self) -> Vector3d<T> {
+        Vector3d::new(self.x, self.y, self.z)
     }
 }
 

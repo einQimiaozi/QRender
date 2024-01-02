@@ -45,13 +45,35 @@ impl<T> Matrix4d<T>
 
     /// Create a 4x4-dimensional matrix with an initial value of item_type
     #[inline]
-    pub fn identity(item_type: T) -> Matrix4d<T> {
+    pub fn fill(item_type: T) -> Matrix4d<T> {
         let items = [Vector4d::new(item_type, item_type, item_type, item_type); 4];
         Matrix4d {
             items,
             rows: 4,
             cols: 4,
         }
+    }
+
+    /// Create a 4x4 dimensional identity matrix
+    #[inline]
+    pub fn identity(item_type: T) -> Matrix4d<T> {
+        let zero = item_type - item_type;
+        let items = [
+            Vector4d::new(item_type, zero, zero, zero),
+            Vector4d::new(zero, item_type, zero, zero),
+            Vector4d::new(zero, zero, item_type, zero),
+            Vector4d::new(zero, zero, zero, item_type),
+        ];
+        Matrix4d {
+            items,
+            rows: 4,
+            cols: 4,
+        }
+    }
+
+    /// Create a 4x4 dimensional zero matrix
+    pub fn zero(item_type: T) -> Matrix4d<T> {
+        Self::fill(item_type - item_type)
     }
 
     /** matrix transpose, Example
@@ -133,7 +155,7 @@ impl<T> Matrix4d<T>
      */
     #[inline]
     pub fn product(&self, mat: Matrix4d<T>) -> Matrix4d<T> {
-        let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
+        let mut res = Self::fill(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix4d::new(
             Vector4d::new(mat.items[0].x, mat.items[1].x, mat.items[2].x, mat.items[3].x),
             Vector4d::new(mat.items[0].y, mat.items[1].y, mat.items[2].y, mat.items[3].y),
@@ -186,7 +208,7 @@ impl<T> Matrix4d<T>
      */
     #[inline]
     pub fn product_with_vector4d(&self, v: Vector4d<T>) -> Vector4d<T> {
-        let mut res = Vector4d::identity(self.items[0].x - self.items[0].x);
+        let mut res = Vector4d::fill(self.items[0].x - self.items[0].x);
         res.x = self.items[0].dot(v);
         res.y = self.items[1].dot(v);
         res.z = self.items[2].dot(v);
@@ -403,7 +425,7 @@ impl<T> ops::Mul for Matrix4d<T>
     /// Dot two 4x4-dimensional matrix.
     #[inline]
     fn mul(self, mat: Matrix4d<T>) -> Matrix4d<T>  {
-        let mut res = Self::identity(mat.items[0].x - mat.items[0].x);
+        let mut res = Self::fill(mat.items[0].x - mat.items[0].x);
         let mut mat2 = Matrix4d::new(
             Vector4d::new(mat.items[0].x, mat.items[1].x, mat.items[2].x, mat.items[3].x),
             Vector4d::new(mat.items[0].y, mat.items[1].y, mat.items[2].y, mat.items[3].y),

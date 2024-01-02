@@ -1,13 +1,13 @@
 #![feature(test)]
 #[cfg(test)]
 mod tests {
-    use QRender::matrix2d::Matrix2d;
+    use QRender::matrix::matrix2d::Matrix2d;
     use QRender::matrix::vector2d::Vector2d;
 
     extern crate test;
     use test::Bencher;
-    use QRender::matrix4d::Matrix4d;
-    use QRender::vector4d::Vector4d;
+    use QRender::matrix::matrix4d::Matrix4d;
+    use QRender::matrix::vector4d::Vector4d;
 
     #[test]
     fn vector2d_equal() {
@@ -28,7 +28,7 @@ mod tests {
 
     #[test]
     fn vector2d_add() {
-        let v1 = Vector2d::identity(1);
+        let v1 = Vector2d::fill(1);
         let v = v1 + v1;
         assert_eq!(v.x, 2);
         assert_eq!(v.y, 2);
@@ -36,7 +36,7 @@ mod tests {
 
     #[test]
     fn vector2d_sub() {
-        let v1 = Vector2d::identity(1);
+        let v1 = Vector2d::fill(1);
         let v = v1 - v1;
         assert_eq!(v.x, 0);
         assert_eq!(v.y, 0);
@@ -44,7 +44,7 @@ mod tests {
 
     #[test]
     fn vector2d_mul() {
-        let v1 = Vector2d::identity(2);
+        let v1 = Vector2d::fill(2);
         let v = v1.mul(v1);
         assert_eq!(v.x, 4);
         assert_eq!(v.y, 4);
@@ -52,7 +52,7 @@ mod tests {
 
     #[test]
     fn vector2d_div() {
-        let v1 = Vector2d::identity(2);
+        let v1 = Vector2d::fill(2);
         let v = v1 / v1.clone();
         assert_eq!(v.x, 1);
         assert_eq!(v.y, 1);
@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn vector2d_add_item() {
-        let v1 = Vector2d::identity(2);
+        let v1 = Vector2d::fill(2);
         let v = Vector2d::add_item(v1, 1);
         assert_eq!(v.x, 3);
         assert_eq!(v.y, 3);
@@ -68,7 +68,7 @@ mod tests {
 
     #[test]
     fn vector2d_sub_item() {
-        let v1 = Vector2d::identity(2);
+        let v1 = Vector2d::fill(2);
         let v = Vector2d::sub_item(v1, 1);
         assert_eq!(v.x, 1);
         assert_eq!(v.y, 1);
@@ -76,7 +76,7 @@ mod tests {
 
     #[test]
     fn vector2d_mul_item() {
-        let v1 = Vector2d::identity(2);
+        let v1 = Vector2d::fill(2);
         let v = Vector2d::mul_item(v1, 5);
         assert_eq!(v.x, 10);
         assert_eq!(v.y, 10);
@@ -84,7 +84,7 @@ mod tests {
 
     #[test]
     fn vector2d_div_item() {
-        let v1 = Vector2d::identity(4);
+        let v1 = Vector2d::fill(4);
         let v = Vector2d::div_item(v1, 2);
         assert_eq!(v.x, 2);
         assert_eq!(v.y, 2);
